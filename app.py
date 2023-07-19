@@ -20,7 +20,7 @@ index_name = "ask dr bob"
 embeddings = OpenAIEmbeddings()
 
 # Initialize Pinecone with your existing index name
-Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
+doc_db = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
