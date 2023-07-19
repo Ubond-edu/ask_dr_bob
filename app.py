@@ -46,7 +46,7 @@ def retrieval_answer_with_sources(query):
 def main():
     st.title("Ask Dr. Bob")
 
-    text_input = st.text_input("Ask your query...")
+    query = st.text_input("Ask your query...")
     if st.button("Ask Query"):
         if len(text_input) > 0:
             st.info("Your Query: " + text_input)
