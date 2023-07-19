@@ -56,7 +56,7 @@ def main():
             if sources:
                 st.info("Sources: " + ", ".join(sources))
             else:
-                st.info("No sources found."))
+                st.info("No sources found.")
             
 if __name__ == "__main__":
     main()
