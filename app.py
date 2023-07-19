@@ -19,7 +19,8 @@ os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 embeddings = OpenAIEmbeddings()
 
 # Initialize Pinecone with your existing index name
-doc_db = Pinecone.from_existing_index('ask-dr-bob', embeddings)
+# Pass empty list as documents since the index already exists
+doc_db = Pinecone.from_documents([], embeddings, 'ask-dr-bob')
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
