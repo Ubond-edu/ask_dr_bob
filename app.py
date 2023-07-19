@@ -32,23 +32,23 @@ llm = ChatOpenAI(
 
 def retrieval_answer_with_sources(query):
     qa_with_sources = RetrievalQAWithSourcesChain.from_chain_type(
-        llm=llm, 
-        chain_type='stuff',  # You might need to replace 'stuff' with the correct chain type
+        llm=llm,
+        chain_type='stuff',
         retriever=doc_db.as_retriever(),
     )
     result = qa_with_sources.run(query)
-    return result['answer'], result['sources']  # Return both 'answer' and 'sources'
+    return result['output']['answer'], result['output']['sources']
 
 def main():
     st.title("Ask Dr. Bob")
 
-    text_input = st.text_input("Ask your query...") 
+    text_input = st.text_input("Ask your query...")
     if st.button("Ask Query"):
-        if len(text_input)>0:
+        if len(text_input) > 0:
             st.info("Your Query: " + text_input)
-            answer, sources = retrieval_answer_with_sources(text_input)  # Receive both 'answer' and 'sources'
+            answer, sources = retrieval_answer_with_sources(text_input)
             st.success("Answer: " + answer)
             st.info("Sources: " + ", ".join(sources))
-
+            
 if __name__ == "__main__":
     main()
