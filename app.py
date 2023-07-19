@@ -37,10 +37,11 @@ def retrieval_answer_with_sources(query):
         chain_type='stuff',
         retriever=doc_db.as_retriever(),
     )
-    result = qa_with_sources.run(query)
+    result = qa_with_sources({'question': query})
     answer = result['answer']
     sources = result['sources']
     return answer, sources
+
 
 
 def main():
