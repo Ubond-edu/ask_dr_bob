@@ -20,7 +20,7 @@ embeddings = OpenAIEmbeddings()
 
 # Initialize Pinecone with your existing index name
 # Pass empty list as documents since the index already exists
-doc_db = Pinecone.from_existing_index('ask-dr-bob', embeddings)
+docsearch = Pinecone.from_existing_index('ask-dr-bob', embeddings)
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
@@ -32,7 +32,7 @@ def retrieval_answer_with_sources(query):
     qa_with_sources = RetrievalQAWithSourcesChain.from_chain_type(
         llm=llm, 
         chain_type='stuff',  # You might need to replace 'stuff' with the correct chain type
-        retriever=doc_db.as_retriever(),
+        retriever=docsearch.as_retriever(),
     )
     result = qa_with_sources.run(query)
     return result['answer'], result['sources']  # Return both 'answer' and 'sources'
