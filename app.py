@@ -15,11 +15,11 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 index_name = "ask dr bob"
 
-# Create OpenAIEmbeddings instance
-embeddings = OpenAIEmbeddings()
-
 # Initialize Pinecone with your existing index name
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
+
+# Create OpenAIEmbeddings instance
+embeddings = OpenAIEmbeddings()
 
 # Initialize Pinecone vector store with the existing index
 doc_db = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
@@ -38,8 +38,9 @@ def retrieval_answer_with_sources(query):
         retriever=doc_db.as_retriever(),
     )
     result = qa_with_sources.run(query)
-    output = result['output']
-    return output.get('answer'), output.get('sources')
+    answer = result['answer']
+    sources = result['sources']
+    return answer, sources
 
 
 def main():
