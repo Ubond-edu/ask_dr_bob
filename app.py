@@ -5,7 +5,6 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 import streamlit as st
 from dotenv import load_dotenv
 from langchain.vectorstores import Pinecone
-import pinecone
 
 load_dotenv()
 
@@ -19,8 +18,7 @@ os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 embeddings = OpenAIEmbeddings()
 
 # Initialize Pinecone with your existing index name
-# Pass empty list as documents since the index already exists
-docsearch = Pinecone.from_existing_index('ask-dr-bob', embeddings)
+doc_db = Pinecone.from_documents([], embeddings, 'ask-dr-bob') # Since you have already created and populated the index, no documents are passed here
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
@@ -32,7 +30,7 @@ def retrieval_answer_with_sources(query):
     qa_with_sources = RetrievalQAWithSourcesChain.from_chain_type(
         llm=llm, 
         chain_type='stuff',  # You might need to replace 'stuff' with the correct chain type
-        retriever=docsearch.as_retriever(),
+        retriever=doc_db.as_retriever(),
     )
     result = qa_with_sources.run(query)
     return result['answer'], result['sources']  # Return both 'answer' and 'sources'
