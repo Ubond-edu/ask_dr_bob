@@ -31,7 +31,7 @@ embeddings = OpenAIEmbeddings()
 doc_db = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
 
 llm = ChatOpenAI(
-    openai_api_key=OPENAI_API_KEY,
+    openai_api_key=openai_api_key,
     model_name='gpt-3.5-turbo',
     temperature=0.2
 )
