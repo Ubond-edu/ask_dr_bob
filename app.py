@@ -5,7 +5,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 import streamlit as st
 from dotenv import load_dotenv
 from langchain.vectorstores import Pinecone
-import Pinecone
+import pinecone
 
 load_dotenv()
 
