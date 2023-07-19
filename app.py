@@ -1,5 +1,4 @@
 import os
-import pinecone 
 from langchain.chains import RetrievalQAWithSourcesChain  
 from langchain.chat_models import ChatOpenAI
 import streamlit as st
@@ -19,7 +18,8 @@ pinecone.init(
     environment=PINECONE_ENV
 )
 
-doc_db = Pinecone('ask-dr-bob')  # Initialize Pinecone with your existing index name
+index_name = 'ask-dr-bob'
+doc_db = Pinecone.from_existing_index(index_name, None)  # Initialize Pinecone with your existing index name. You might need to provide an embeddings object as the second argument.
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
@@ -30,7 +30,7 @@ llm = ChatOpenAI(
 def retrieval_answer_with_sources(query):
     qa_with_sources = RetrievalQAWithSourcesChain.from_chain_type(
         llm=llm, 
-        chain_type='stuff',  
+        chain_type='stuff',  # You might need to replace 'stuff' with the correct chain type
         retriever=doc_db.as_retriever(),
     )
     result = qa_with_sources.run(query)
