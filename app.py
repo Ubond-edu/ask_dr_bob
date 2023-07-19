@@ -34,7 +34,7 @@ def retrieval_answer_with_sources(query):
         retriever=doc_db.as_retriever(),
     )
     result = qa_with_sources.run(query)
-    return result
+    return result['answer'], result['sources']  # Return both 'answer' and 'sources'
 
 def main():
     st.title("Ask Dr. Bob")
@@ -43,9 +43,9 @@ def main():
     if st.button("Ask Query"):
         if len(text_input)>0:
             st.info("Your Query: " + text_input)
-            result = retrieval_answer_with_sources(text_input)
-            st.success("Answer: " + result['answer'])
-            st.info("Sources: " + ", ".join(result['sources']))
+            answer, sources = retrieval_answer_with_sources(text_input)  # Receive both 'answer' and 'sources'
+            st.success("Answer: " + answer)
+            st.info("Sources: " + ", ".join(sources))
 
 if __name__ == "__main__":
     main()
