@@ -25,7 +25,7 @@ index_name = "ask dr bob"
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
 
 # Create OpenAIEmbeddings instance
-embeddings = OpenAIEmbeddings()
+embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
 # Initialize Pinecone vector store with the existing index
 doc_db = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
@@ -35,7 +35,6 @@ llm = ChatOpenAI(
     model_name='gpt-3.5-turbo',
     temperature=0.2
 )
-
 
 def retrieval_answer_with_sources(query):
     qa_with_sources = RetrievalQAWithSourcesChain.from_chain_type(
@@ -47,8 +46,6 @@ def retrieval_answer_with_sources(query):
     answer = result['answer']
     sources = result['sources']
     return answer, sources
-
-
 
 def main():
     st.title("Ask Dr. Bob")
@@ -66,7 +63,6 @@ def main():
                 st.info("Sources: " + ", ".join(sources))
             else:
                 st.info("No sources found.")
-
 
 if __name__ == "__main__":
     main()
