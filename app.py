@@ -19,7 +19,7 @@ openai_api_key = st.secrets["openai_api_key"]
 # Set the OpenAI API key
 openai.api_key = openai_api_key
 
-index_name = "ask dr bob"
+index_name = "ask-dr-bob"
 
 # Initialize Pinecone with your existing index name
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
