@@ -5,6 +5,7 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
+import pinecone
 
 load_dotenv()
 
@@ -14,11 +15,11 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 index_name = "ask dr bob"
 
-# Initialize Pinecone with your existing index name
-pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
-
 # Create OpenAIEmbeddings instance
 embeddings = OpenAIEmbeddings()
+
+# Initialize Pinecone with your existing index name
+pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
 
 # Initialize Pinecone vector store with the existing index
 doc_db = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
