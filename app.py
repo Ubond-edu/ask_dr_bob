@@ -1,9 +1,11 @@
 import os
 from langchain.chains import RetrievalQAWithSourcesChain  
 from langchain.chat_models import ChatOpenAI
+from langchain.embeddings.openai import OpenAIEmbeddings
 import streamlit as st
 from dotenv import load_dotenv
 from langchain.vectorstores import Pinecone
+import pinecone
 
 load_dotenv()
 
@@ -18,8 +20,11 @@ pinecone.init(
     environment=PINECONE_ENV
 )
 
-index_name = 'ask-dr-bob'
-doc_db = Pinecone.from_existing_index(index_name, None)  # Initialize Pinecone with your existing index name. You might need to provide an embeddings object as the second argument.
+# Create OpenAIEmbeddings instance
+embeddings = OpenAIEmbeddings()
+
+# Initialize Pinecone with your existing index name
+doc_db = Pinecone.from_existing_index('ask-dr-bob', embeddings)
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
