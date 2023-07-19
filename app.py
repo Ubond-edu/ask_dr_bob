@@ -11,7 +11,12 @@ load_dotenv()
 
 PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
 PINECONE_ENV = os.getenv('PINECONE_ENV')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+# Access the OpenAI API Key from secrets
+openai_api_key = st.secrets["openai_api_key"]
+
+# Set the OpenAI API key
+openai.api_key = openai_api_key
 
 index_name = "ask dr bob"
 
