@@ -60,9 +60,10 @@ def main():
             else:
                 st.warning("No answer found.")
             if sources:
-                st.info("Sources: " + ", ".join(sources))
+                st.info("Sources: " + sources)
             else:
                 st.info("No sources found.")
+
 
 if __name__ == "__main__":
     main()
