@@ -5,6 +5,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 import streamlit as st
 from dotenv import load_dotenv
 from langchain.vectorstores import Pinecone
+import Pinecone
 
 load_dotenv()
 
@@ -14,11 +15,12 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 
+index_name = "ask dr bob"
 # Create OpenAIEmbeddings instance
 embeddings = OpenAIEmbeddings()
 
 # Initialize Pinecone with your existing index name
-doc_db = Pinecone.from_documents([], embeddings, 'ask-dr-bob') # Since you have already created and populated the index, no documents are passed here
+Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
 
 llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
