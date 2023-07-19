@@ -9,6 +9,10 @@ import pinecone
 
 load_dotenv()
 
+PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
+PINECONE_ENV = os.getenv('PINECONE_ENV')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 pinecone.init(api_key=os.environ["PINECONE_API_KEY"], environment=os.environ["PINECONE_ENV"])
 
 os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
